@@ -1,0 +1,95 @@
+Slip 21
+1
+import java.util.*;
+public class SubjectNames {
+public static void main(String[] args) {
+Scanner scanner = new Scanner(System.in);
+System.out.print("Enter the number of subjects (N): ");
+int N = scanner.nextInt();
+LinkedList<String> subjectList = new LinkedList<>();
+System.out.println("Enter " + N + " subject names:");
+for (int i = 0; i < N; i++) {
+String subject = scanner.next();
+subjectList.add(subject);
+}
+System.out.println("Subject names:");
+Iterator<String> iterator = subjectList.iterator();
+while (iterator.hasNext()) {
+System.out.println(iterator.next());
+} 
+scanner.close();
+}
+}
+
+
+2.
+import java.util.LinkedList;
+class Buffer {
+private LinkedList<Integer> queue;
+private int capacity;
+public Buffer(int capacity) {
+this.queue = new LinkedList<>();
+this.capacity = capacity;
+}
+public synchronized void produce(int value) throws InterruptedException {
+while (queue.size() == capacity) {
+wait();
+}
+System.out.println("Producer produced: " + value);
+queue.add(value);
+notify();
+}
+public synchronized int consume() throws InterruptedException {
+while (queue.size() == 0) {
+wait();
+}
+int value = queue.remove();
+System.out.println("Consumer consumed: " + value);
+notify();
+return value;
+}
+}
+class Producer extends Thread {
+private Buffer buffer;
+public Producer(Buffer buffer) {
+this.buffer = buffer;
+}
+@Override
+public void run() {
+int value = 0;
+while (true) {
+try {
+buffer.produce(value++);
+Thread.sleep(1000);
+} catch (InterruptedException e) {
+e.printStackTrace();
+}
+}
+}
+}
+class Consumer extends Thread {
+private Buffer buffer;
+public Consumer(Buffer buffer) {
+this.buffer = buffer;
+}
+@Override
+public void run() {
+while (true) {
+try {
+buffer.consume();
+Thread.sleep(2000);
+} catch (InterruptedException e) {
+e.printStackTrace();
+}
+}
+}
+}
+public class ProducerConsumer {
+public static void main(String[] args) {
+Buffer buffer = new Buffer(5);
+Producer producer = new Producer(buffer);
+Consumer consumer = new Consumer(buffer);
+producer.start();
+consumer.start();
+}
+}

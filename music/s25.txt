@@ -1,0 +1,50 @@
+Slip 25
+1.
+index.jsp
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Voter Eligibility Checker</title>
+</head>
+<body>
+<h2>Voter Eligibility Checker</h2>
+<form action="checkEligibility.jsp" method="post">
+Name: <input type="text" name="name"><br>
+Age: <input type="text" name="age"><br>
+<button type="submit">Check Eligibility</button>
+</form>
+</body>
+</html>
+
+checkEligibility.jsp:
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Voter Eligibility Result</title>
+</head>
+<body>
+<h2>Voter Eligibility Result</h2>
+<%-- Get the name and age from the request --%>
+<% String name = request.getParameter("name");
+int age = Integer.parseInt(request.getParameter("age")); 
+boolean isEligible = age >= 18;
+%>
+<p><b>Name:</b> <%= name %></p>
+<p><b>Age:</b> <%= age %></p>
+<%-- Display the eligibility result --%>
+<% if (isEligible) { %>
+<p>Congratulations! You are eligible for voting.</p>
+<% } else { %>
+<p>Sorry! You are not eligible for voting.</p>
+<% } %>
+<a href="index.jsp">Go Back</a>
+</body>
+</html>
+
+

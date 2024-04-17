@@ -1,0 +1,68 @@
+Slip 24
+1.
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+public class TextScroll extends JFrame {
+private JLabel label;
+private int xPos = 0;
+private String text = "This is a scrolling text from left to right 
+continuously! ";
+public TextScroll() {
+setTitle("Text Scrolling");
+setSize(400, 100);
+setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+label = new JLabel(text);
+label.setFont(new Font("Arial", Font.BOLD, 16));
+label.setHorizontalAlignment(SwingConstants.LEFT);
+getContentPane().add(label);
+Thread thread = new Thread(new Scroller());
+thread.start();
+}
+private class Scroller implements Runnable {
+@Override
+public void run() {
+try {
+while (true) {
+Thread.sleep(50); 
+xPos++;
+if (xPos > getWidth()) {
+xPos = -label.getWidth();
+}
+label.setBounds(xPos, 0, getWidth(), getHeight());
+}
+} catch (InterruptedException e) {
+e.printStackTrace();
+}
+}
+}
+public static void main(String[] args) {
+SwingUtilities.invokeLater(() -> new TextScroll().setVisible(true));
+}
+}
+
+
+2.
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Login Processing</title>
+</head>
+<body>
+<%-- Get username and password from the request --%>
+<% String username = request.getParameter("username");
+String password = request.getParameter("password");
+%>
+<%-- Check if username and password are the same --%>
+<% if (username != null && password != null && username.equals(password)) { %>
+<%-- If username and password are the same, redirect to Login.html --%>
+<% response.sendRedirect("Login.html"); %>
+<% } else { %>
+<%-- If username and password are different, redirect to Error.html --%>
+<% response.sendRedirect("Error.html"); %>
+<% } %>
+</body>
+</html>

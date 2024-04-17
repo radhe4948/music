@@ -1,0 +1,70 @@
+Slip 16
+1. 
+import java.util.TreeSet;
+public class TreeSetExample {
+public static void main(String[] args) {
+TreeSet<String> colorsTreeSet = new TreeSet<>();
+colorsTreeSet.add("Red");
+colorsTreeSet.add("Green");
+colorsTreeSet.add("Blue");
+colorsTreeSet.add("Yellow");
+colorsTreeSet.add("Orange");
+System.out.println("Colors in ascending order:");
+for (String color : colorsTreeSet) {
+System.out.println(color);
+}
+}
+}
+
+
+
+Q2
+import java.sql.*;
+import java.io.*;
+class Slip
+{
+public static void main(String a[])
+{
+PreparedStatement ps;
+Connection con;
+try{
+Class.forName("");
+con=DriverManager.getConnection("");
+if(con==null)
+{
+System.out.println("Connection Failed......");
+System.exit(1);
+}
+System.out.println("Connection Esatablished......");
+Statement stmt=con.createStatement();
+BufferedReader br = new BufferedReader(new 
+InputStreamReader(System.in));
+String query="insert into Customer values(?,?,?,?)";
+ps=con.prepareStatement(query);
+System.out.println("Customer Details....");
+System.out.println("Enter CID");
+int cid=Integer.parseInt(br.readLine()); 
+ps.setInt(1,cid); 
+System.out.println("Enter name");
+String name=br.readLine();
+ps.setString(2,name);
+System.out.println("Enter Address");
+String add=br.readLine();
+ps.setString(3,add);
+System.out.println("Enter Ph_No");
+String phno=br.readLine();
+ps.setString(4,phno);
+int no=ps.executeUpdate();
+if(no!=0)
+System.out.println("Data inserted succesfully.....");
+else
+System.out.println("Data NOT inserted");
+con.close();
+}
+catch(Exception e)
+{
+e.printStackTrace();
+}
+}
+}
+

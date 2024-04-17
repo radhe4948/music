@@ -1,0 +1,75 @@
+Slip 26
+1.
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+public class DeleteEmployeeDetails {
+public static void main(String[] args) {
+if (args.length != 1) {
+System.out.println("Usage: java DeleteEmployeeDetails <employee_id>");
+return;
+}
+int employeeId = Integer.parseInt(args[0]);
+String url = "jdbc:mysql://localhost:3306/your_database";
+String username = "username";
+String password = "password";
+try (Connection connection = DriverManager.getConnection(url, username, password)) 
+{
+String sql = "DELETE FROM Employee WHERE ENo = ?";
+PreparedStatement preparedStatement = connection.prepareStatement(sql);
+preparedStatement.setInt(1, employeeId);
+int rowsAffected = preparedStatement.executeUpdate();
+if (rowsAffected > 0) {
+System.out.println("Employee details deleted successfully.");
+} else {
+System.out.println("No employee found with the given ID.");
+}
+} catch (SQLException e) {
+e.printStackTrace();
+}
+}
+}
+2.
+index.jsp
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Sum of First and Last Digit</title>
+</head>
+<body>
+<h2>Sum of First and Last Digit Calculator</h2>
+<form action="sum.jsp" method="post">
+Enter a number: <input type="text" name="number">
+<button type="submit">Calculate Sum</button>
+</form>
+</body>
+</html>
+
+
+sum.jsp
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Sum Result</title>
+</head>
+<body>
+<h2>Sum Result</h2>
+<%-- Get the number from the request --%>
+<% String numberStr = request.getParameter("number");
+int number = Integer.parseInt(numberStr);
+int firstDigit = Character.getNumericValue(numberStr.charAt(0));
+int lastDigit = number % 10;
+int sum = firstDigit + lastDigit;
+%>
+<p style="color: red; font-size: 18px;">Sum of the first and last digit of <%= 
+number %> is <%= sum %>.</p>
+<a href="index.jsp">Go Back</a>
+</body>
+</html>

@@ -1,0 +1,93 @@
+Slip 30
+1.
+import javax.swing.*;
+import java.awt.*;
+public class IndianFlagDrawing extends JPanel implements Runnable {
+private static final int WIDTH = 800;
+private static final int HEIGHT = 600;
+private static final Color SAFFRON_COLOR = new Color(255, 153, 51);
+private static final Color WHITE_COLOR = Color.WHITE;
+private static final Color GREEN_COLOR = new Color(18, 136, 7);
+private static final Color BLUE_COLOR = new Color(0, 56, 168);
+private boolean drawFlag = false;
+public IndianFlagDrawing() {
+setPreferredSize(new Dimension(WIDTH, HEIGHT));
+}
+public void startDrawing() {
+Thread thread = new Thread(this);
+thread.start();
+}
+@Override
+protected void paintComponent(Graphics g) {
+super.paintComponent(g);
+if (drawFlag) {
+g.setColor(SAFFRON_COLOR);
+g.fillRect(0, 0, WIDTH, HEIGHT / 3);
+g.setColor(WHITE_COLOR);
+g.fillRect(0, HEIGHT / 3, WIDTH, HEIGHT / 3);
+g.setColor(GREEN_COLOR);
+g.fillRect(0, 2 * HEIGHT / 3, WIDTH, HEIGHT / 3);
+int chakraX = WIDTH / 2 - 100;
+int chakraY = HEIGHT / 6 - 50;
+g.setColor(BLUE_COLOR);
+g.fillOval(chakraX, chakraY, 200, 200);
+g.setColor(WHITE_COLOR);
+for (int i = 0; i < 24; i++) {
+double angle = Math.toRadians(i * 15);
+int x1 = (int) (chakraX + 100 + 85 * Math.cos(angle));
+int y1 = (int) (chakraY + 100 + 85 * Math.sin(angle));
+int x2 = (int) (chakraX + 100 + 100 * Math.cos(angle));
+int y2 = (int) (chakraY + 100 + 100 * Math.sin(angle));
+g.drawLine(x1, y1, x2, y2);
+}
+}
+}
+@Override
+public void run() {
+drawFlag = true;
+repaint();
+}
+public static void main(String[] args) {
+SwingUtilities.invokeLater(() -> {
+IndianFlagDrawing flagDrawing = new IndianFlagDrawing();
+flagDrawing.startDrawing();
+JFrame frame = new JFrame("Indian Flag");
+frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+frame.getContentPane().add(flagDrawing);
+frame.pack();
+frame.setLocationRelativeTo(null);
+frame.setVisible(true);
+});
+}
+}
+
+
+2
+import java.sql.*;
+public class ScrollableResultSetExample {
+public static void main(String[] args) {
+String url = "jdbc:mysql://localhost:3306/your_database";
+String username = "username";
+String password = "password";
+try (Connection connection = DriverManager.getConnection(url, username, 
+password)) {
+Statement statement = 
+connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, 
+ResultSet.CONCUR_READ_ONLY);
+ResultSet resultSet = statement.executeQuery("SELECT * FROM Teacher");
+resultSet.last();
+int rowCount = resultSet.getRow();
+System.out.println("Total rows in the ResultSet: " + rowCount);
+resultSet.beforeFirst();
+System.out.println("Teacher Details:");
+while (resultSet.next()) {
+int tid = resultSet.getInt("TID");
+String tname = resultSet.getString("TName");
+double salary = resultSet.getDouble("Salary");
+System.out.println("TID: " + tid + ", TName: " + tname + ", Salary:" + salary);
+}
+} catch (SQLException e) {
+e.printStackTrace();
+}
+}
+}

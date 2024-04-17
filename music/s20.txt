@@ -1,0 +1,96 @@
+Slip 20
+1.
+NumberWord.html
+<html>
+<body>
+<form method=get action="NumberWord.jsp">
+Enter Any Number : <input type=text name=num><br><br>
+<input type=submit value="Display">
+</form>
+<body>
+</html>
+NumberWord.jsp
+<html>
+<body>
+<font color=red>
+<%! int i,n;
+String s1;
+%>
+<% s1=request.getParameter("num");
+n=s1.length();
+i=0;
+do
+{
+char ch=s1.charAt(i);
+switch(ch)
+{
+case '0': out.println("Zero ");break;
+case '1': out.println("One ");break;
+case '2': out.println("Two ");break;
+case '3': out.println("Three ");break;
+case '4': out.println("Four ");break;
+case '5': out.println("Five ");break;
+case '6': out.println("Six ");break;
+case '7': out.println("Seven ");break;
+case '8': out.println("Eight ");break;
+case '9': out.println("Nine ");break;
+}
+i++;
+}while(i<n);
+%>
+</font>
+</body>
+</html>
+
+2. 
+import javax.swing.*;
+import java.awt.*;
+public class TempleDrawing extends JFrame {
+public TempleDrawing() {
+setTitle("Temple Drawing");
+setSize(500, 500);
+setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+add(new TemplePanel());
+setVisible(true);
+}
+public static void main(String[] args) {
+SwingUtilities.invokeLater(() -> new TempleDrawing());
+}
+}
+class TemplePanel extends JPanel {
+@Override
+protected void paintComponent(Graphics g) {
+super.paintComponent(g);
+g.setColor(Color.LIGHT_GRAY);
+g.fillRect(100, 200, 300, 200); 
+g.setColor(Color.WHITE);
+g.fillRect(120, 220, 260, 160); 
+g.setColor(Color.BLACK);
+g.drawRect(100, 200, 300, 200);
+g.drawLine(100, 200, 250, 100); 
+g.drawLine(400, 200, 250, 100); 
+g.drawLine(250, 100, 100, 200); 
+g.setColor(new Color(139, 69, 19)); 
+g.fillRect(220, 320, 60, 80);
+g.setColor(Color.BLACK);
+g.drawRect(220, 320, 60, 80);
+g.fillOval(290, 370, 7, 7); 
+g.setColor(Color.WHITE);
+g.fillRect(150, 250, 50, 50); 
+g.fillRect(300, 250, 50, 50); 
+g.setColor(Color.BLACK);
+g.drawRect(150, 250, 50, 50);
+g.drawRect(300, 250, 50, 50);
+g.drawLine(175, 250, 175, 300); 
+g.drawLine(150, 275, 200, 275);
+g.drawLine(325, 250, 325, 300);
+g.drawLine(300, 275, 350, 275);
+g.setColor(Color.RED);
+g.fillRect(140, 120, 220, 20); 
+g.fillRect(100, 320, 25, 80); 
+g.fillRect(375, 320, 25, 80); 
+g.setColor(Color.BLACK);
+g.setFont(new Font("Arial", Font.BOLD, 16));
+g.drawString("Temple", 220, 160);
+}
+}

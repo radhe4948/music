@@ -1,0 +1,96 @@
+Slip Nos -12
+Q1
+Index.html file:
+<!DOCTYPE html>
+<html>
+<head>
+<title>PERFECT NUMBER</title>
+</head>
+<body>
+<form action="perfect.jsp" method="post">
+Enter Number :<input type="text" name="num">
+<input type="submit" value="Submit" name="s1">
+</form>
+</body>
+</html>
+
+Perfect.jsp file:
+<%@ page import="java.util.*" %>
+
+<%
+if(request.getParameter("s1")!=null)
+  {
+Integer num,a,i,sum = 0;
+num = Integer.parseInt(request.getParameter("num"));
+a = num;
+
+for(i=1;i<a;i++)
+{
+if(a%i==0)
+{
+sum=sum + i;
+}
+}
+if(sum==a)
+{
+out.println(+num+ "is a perfect number");
+}
+else
+{
+out.println(+num+ "is not a perfect number");
+}
+  } 
+%>
+
+
+Q2
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.sql.*;
+public class ProjectDetails extends JFrame {
+ private JTable table;
+ public ProjectDetails() {
+ setTitle("Project Details");
+ setSize(600, 400);
+ setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+ table = new JTable();
+ JScrollPane scrollPane = new JScrollPane(table);
+ getContentPane().add(scrollPane, BorderLayout.CENTER);
+ displayProjectDetails();
+ }
+ private void displayProjectDetails() {
+ try {
+ Connection connection = 
+DriverManager.getConnection("jdbc:mysql://localhost:3306/your_database", 
+"username", "password");
+ Statement statement = connection.createStatement();
+ ResultSet resultSet = statement.executeQuery("SELECT * FROM PROJECT");
+ DefaultTableModel model = new DefaultTableModel();
+ model.addColumn("Project ID");
+ model.addColumn("Project Name");
+ model.addColumn("Project Description");
+ model.addColumn("Project Status");
+ while (resultSet.next()) {
+ Object[] row = {
+ resultSet.getInt("project_id"),
+ resultSet.getString("Project_name"),
+ resultSet.getString("Project_description"),
+ resultSet.getString("Project_Status")
+ };
+ model.addRow(row);
+ }
+ table.setModel(model);
+ resultSet.close();
+ statement.close();
+ connection.close();
+ } catch (SQLException e) {
+ e.printStackTrace();
+ }
+ }
+ public static void main(String[] args) {
+ SwingUtilities.invokeLater(() -> {
+ new ProjectDetails().setVisible(true);
+ });
+ }
+}

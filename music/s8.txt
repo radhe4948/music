@@ -1,0 +1,68 @@
+SLip Nops-8
+Q1
+
+public class A1 extends Thread {
+String str;
+int n;
+A1(String str, int n) {
+this.str = str;
+this.n = n;
+}
+public void run() {
+try {
+for (int i = 0; i < n; i++) {
+System.out.println(getName() + " : " + str);
+}
+} catch (Exception e) {
+e.printStackTrace();
+}
+}
+public static void main(String[] args) {
+A1 t1 = new A1("COVID19", 10);
+A1 t2 = new A1("LOCKDOWN2020", 20);
+A1 t3 = new A1("VACCINATED", 30);
+t1.start();
+t2.start();
+t3.start();
+}
+}
+
+Q2.
+<html>
+ <head>
+ <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>JSP Page</title>
+</head>
+<body><center><h1>The required Result is:: </h1>
+ <h2>
+<%
+ int n,i,flag=0;
+String ns= request.getParameter("n");
+n=Integer.parseInt(ns);
+if(n>1)
+ {
+for(i=2;i<=n/2;i++)
+{
+ if(n%i==0)
+{
+flag=1;
+break;
+}
+}
+}
+if(flag==0)
+ {
+out.println("<pre>");
+out.println(n+" is a prime no.");
+out.println("</pre>");
+}
+else
+{
+out.println("<pre>");
+out.println(n+" is not a prime no.");
+out.println("</pre>");
+}
+%>
+</h2></center>
+</body>
+</html>

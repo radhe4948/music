@@ -1,0 +1,70 @@
+s 29
+Q1.
+import java.sql.*;
+public class ColumnInfoDisplay {
+static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+static final String DB_URL = "jdbc:mysql://localhost:3306/your_database";
+static final String USER = "username";
+static final String PASS = "password";
+public static void main(String[] args) {
+Connection conn = null;
+Statement stmt = null;
+try {
+Class.forName(JDBC_DRIVER);
+System.out.println("Connecting to database...");
+conn = DriverManager.getConnection(DB_URL, USER, PASS);
+System.out.println("Creating statement...");
+stmt = conn.createStatement();
+String sql = "SELECT * FROM DONAR";
+ResultSet rs = stmt.executeQuery(sql);
+ResultSetMetaData rsmd = rs.getMetaData();
+int columnCount = rsmd.getColumnCount();
+System.out.println("Column Information:");
+for (int i = 1; i <= columnCount; i++) {
+System.out.println("Column Name: " + rsmd.getColumnName(i));
+System.out.println("Data Type: " + rsmd.getColumnTypeName(i));
+System.out.println("Nullable: " + (rsmd.isNullable(i) == 
+ResultSetMetaData.columnNullable ? "YES" : "NO"));
+System.out.println("Auto Increment: " + (rsmd.isAutoIncrement(i) ? 
+"YES" : "NO"));
+System.out.println("------------------------------");
+}
+rs.close();
+stmt.close();
+conn.close();
+} catch (SQLException se) {
+se.printStackTrace();
+} catch (Exception e) {
+e.printStackTrace();
+} finally {
+try {
+if (stmt != null) stmt.close();
+} catch (SQLException se2) {
+}
+try {
+if (conn != null) conn.close();
+} catch (SQLException se) {
+se.printStackTrace();
+}
+}
+System.out.println("Goodbye!");
+}
+}
+
+
+Q2
+import java.util.LinkedList;
+public class LinkedListOperations {
+public static void main(String[] args) {
+LinkedList<Integer> linkedList = new LinkedList<>();
+linkedList.addFirst(10);
+linkedList.addFirst(20);
+linkedList.addFirst(30);
+System.out.println("LinkedList after adding elements at the first position:");
+System.out.println(linkedList);
+linkedList.removeLast();
+System.out.println("LinkedList after deleting the last element:");
+System.out.println(linkedList);
+System.out.println("Size of the LinkedList: " + linkedList.size());
+}
+}

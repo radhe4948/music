@@ -1,0 +1,70 @@
+Slip 23
+1. 
+import java.util.Scanner;
+public class VowelDisplay {
+public static void main(String[] args) {
+Scanner scanner = new Scanner(System.in);
+System.out.print("Enter a string: ");
+String input = scanner.nextLine();
+VowelThread vowelThread = new VowelThread(input);
+vowelThread.start();
+}
+}
+class VowelThread extends Thread {
+private String input;
+public VowelThread(String input) {
+this.input = input;
+}
+@Override
+public void run() {
+try {
+for (int i = 0; i < input.length(); i++) {
+char ch = input.charAt(i);
+if (isVowel(ch)) {
+System.out.println(ch);
+Thread.sleep(3000); 
+}
+}
+} catch (InterruptedException e) {
+e.printStackTrace();
+}
+}
+private boolean isVowel(char ch) {
+return "AEIOUaeiou".indexOf(ch) != -1;
+}
+}
+
+
+2. 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.ListIterator;
+public class StudentNames {
+public static void main(String[] args) {
+if (args.length == 0) {
+System.out.println("No student names provided.");
+return;
+}
+ArrayList<String> studentList = new ArrayList<>();
+for (String arg : args) {
+studentList.add(arg);
+}
+System.out.println("Student names using Iterator:");
+displayUsingIterator(studentList);
+System.out.println("\nStudent names in reverse order using ListIterator:");
+displayInReverseOrder(studentList);
+}
+private static void displayUsingIterator(ArrayList<String> studentList) {
+Iterator<String> iterator = studentList.iterator();
+while (iterator.hasNext()) {
+System.out.println(iterator.next());
+}
+}
+private static void displayInReverseOrder(ArrayList<String> studentList) {
+ListIterator<String> listIterator = 
+studentList.listIterator(studentList.size());
+while (listIterator.hasPrevious()) {
+System.out.println(listIterator.previous());
+}
+}
+}

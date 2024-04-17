@@ -1,0 +1,52 @@
+Slip 28
+1. 
+index.jsp
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Reverse String</title>
+</head>
+<body>
+<h2>Reverse String</h2>
+<form action="reverse.jsp" method="post">
+Enter a string: <input type="text" name="inputString">
+<button type="submit">Reverse</button>
+</form>
+</body>
+</html>
+
+reverse.jsp
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Reversed String</title>
+</head>
+<body>
+<h2>Reversed String</h2>
+<%-- Get the input string from the request --%>
+<% String inputString = request.getParameter("inputString");
+String reversedString = new StringBuilder(inputString).reverse().toString();
+%>
+<p>Original String: <%= inputString %></p>
+<p>Reversed String: <%= reversedString %></p>
+<a href="index.jsp">Go Back</a>
+</body>
+</html>
+
+Q2
+
+public class CurrentThreadName {
+public static void main(String[] args) {
+Thread thread = new Thread(() -> {
+System.out.println("Currently executing thread: " + 
+Thread.currentThread().getName());
+});
+thread.start();
+}
+}
